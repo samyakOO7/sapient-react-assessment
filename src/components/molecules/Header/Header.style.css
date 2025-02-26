@@ -1,0 +1,16 @@
+.header-container {
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    background-color: black;
+    width: 100vw;
+  }
+  
+  .header-text {
+    font-size: 18px;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: white;
+  }
+  

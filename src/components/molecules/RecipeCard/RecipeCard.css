@@ -1,0 +1,24 @@
+.recipe-card {
+    background: white;
+    border-radius: 8px;
+    padding: 12px;
+    margin: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+.recipe-card:hover {
+    transform: scale(1.05);
+}
+
+.recipe-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #d32f2f; /* Deep red */
+}
+
+.recipe-cuisine {
+    font-size: 14px;
+    color: #555;
+}

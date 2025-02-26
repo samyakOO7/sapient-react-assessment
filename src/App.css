@@ -1,0 +1,22 @@
+@font-face {
+  font-family: "Futura";
+  src: url("./assets/PS_Fonts/Futura/FuturaNext_Medium.otf") format("opentype");
+  font-display: swap;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Futura", sans-serif;
+}
+
+body {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.css-ahj2mt-MuiTypography-root {
+  font-family: "Futura", sans-serif !important;
+}
