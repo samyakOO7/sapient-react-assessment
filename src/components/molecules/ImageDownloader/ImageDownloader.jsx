@@ -1,6 +1,7 @@
 import React from "react";
 import { saveAs } from "file-saver";
 import PropTypes from "prop-types";
+import "./ImageDownloader.css";
 
 const ImageDownloader = ({ fileUrl, fileName }) => {
   const handleDownload = () => saveAs(fileUrl, fileName);

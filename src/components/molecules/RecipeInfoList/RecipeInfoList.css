@@ -1,0 +1,32 @@
+
+h3 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-top: 1.5rem;
+    border-bottom: 2px solid #D72638;
+    padding-bottom: 0.3rem;
+  }
+  
+  .hoverable-list {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+    border-radius: 8px;
+    padding: 1rem;
+  }
+  
+  .hoverable-list li {
+    background: #F8F9FA;
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #333;
+    transition: transform 0.3s, background-color 0.3s ease;
+  }
+  
+  .hoverable-list li:hover {
+    transform: scale(1.05); 
+    background-color: #D72638; 
+    color: white; 
+  }

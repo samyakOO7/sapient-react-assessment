@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import "./RecipeInfoList.css";
 
 const RecipeInfoList = ({ data = [], heading, isLabeled }) => (
   <section className="recipe-section">

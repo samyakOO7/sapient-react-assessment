@@ -32,12 +32,11 @@
 
 
 
-/* Stylish Welcome Message */
 .welcome-text {
     font-size: 1.8rem;
     max-width: 1000px;
     font-weight: 600;
-    color: #D72638; /* Vibrant Deep Red */
+    color: #D72638;
     line-height: 1.4;
     text-transform: uppercase;
     letter-spacing: 1px;
