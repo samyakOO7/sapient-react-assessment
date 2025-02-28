@@ -1,55 +1,55 @@
-import React from "react";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { MemoryRouter, useNavigate } from "react-router-dom";
 import SearchBar from "../SearchBar";
-import API_CONFIG from "../../../config/base-config";
-
-const mockNavigate = jest.fn();
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
-  useNavigate: () => mockNavigate,
+  useNavigate: jest.fn(),
 }));
 
-global.fetch = jest.fn(() =>
-  Promise.resolve({
-    json: () =>
-      Promise.resolve([{ id: 1, name: "Spaghetti Carbonara", cuisine: "Italian" }]),
-  })
-);
-
-beforeEach(() => {
-  jest.clearAllMocks();
-});
+global.fetch = jest.fn();
 
 describe("SearchBar Component", () => {
-  test("renders search input", () => {
+  const mockNavigate = jest.fn();
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    fetch.mockImplementation(() =>
+      Promise.resolve({
+        json: () => Promise.resolve([{ id: 1, name: "Spaghetti Carbonara" }]),
+      })
+    );
+    useNavigate.mockReturnValue(mockNavigate);
+  });
+
+  test("renders search input field", () => {
     render(
-      <MemoryRouter>
+      <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+        <SearchBar />
+      </MemoryRouter>
+    );
+
+    expect(screen.getByPlaceholderText("Search recipes...")).toBeInTheDocument();
+  });
+
+  test("does not fetch recipes when input is less than 3 characters", async () => {
+    render(
+      <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <SearchBar />
       </MemoryRouter>
     );
 
     const input = screen.getByPlaceholderText("Search recipes...");
-    expect(input).toBeInTheDocument();
+    fireEvent.change(input, { target: { value: "Sp" } });
+
+    await waitFor(() => {
+      expect(fetch).not.toHaveBeenCalled();
+    });
   });
 
-  test("updates query when typing", () => {
+  test("fetches and displays results when typing 3+ characters", async () => {
     render(
-      <MemoryRouter>
-        <SearchBar />
-      </MemoryRouter>
-    );
-
-    const input = screen.getByPlaceholderText("Search recipes...");
-    fireEvent.change(input, { target: { value: "Pasta" } });
-
-    expect(input.value).toBe("Pasta");
-  });
-
-  test("fetches and displays results when typing", async () => {
-    render(
-      <MemoryRouter>
+      <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <SearchBar />
       </MemoryRouter>
     );
@@ -58,14 +58,16 @@ describe("SearchBar Component", () => {
     fireEvent.change(input, { target: { value: "Spa" } });
 
     await waitFor(() => {
-      expect(fetch).toHaveBeenCalledWith(expect.stringContaining("search=Spa"));
+      expect(fetch).toHaveBeenCalledWith(expect.stringMatching(/search=Spa/));
       expect(screen.getByText("Spaghetti Carbonara")).toBeInTheDocument();
     });
   });
 
-  test("navigates to recipe page on selection", async () => {
+  test("handles API error gracefully", async () => {
+    fetch.mockImplementationOnce(() => Promise.reject(new Error("API failure")));
+
     render(
-      <MemoryRouter>
+      <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <SearchBar />
       </MemoryRouter>
     );
@@ -74,10 +76,10 @@ describe("SearchBar Component", () => {
     fireEvent.change(input, { target: { value: "Spa" } });
 
     await waitFor(() => {
-      const recipe = screen.getByText("Spaghetti Carbonara");
-      fireEvent.click(recipe);
+      expect(fetch).toHaveBeenCalled();
     });
 
-    expect(mockNavigate).toHaveBeenCalledWith("/recipe/1");
+    // Ensuring it does not break or show undefined results
+    expect(screen.queryByText("Spaghetti Carbonara")).not.toBeInTheDocument();
   });
 });

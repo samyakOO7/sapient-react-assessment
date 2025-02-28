@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { saveAs } from 'file-saver';
 import Spinner from "../../atoms/Spinner/Spinner";
-import "./RecipeDetails.css";
+import ImageWithLoader from "../../molecules/ImageWithLoader/ImageWithLoader";
+import DownloadButton from "../../atoms/DownloadImageButton/DownloadImageButton";
+import RecipeInfoList from "../../molecules/RecipeInfoList/RecipeInfoList";
 import API_CONFIG from "../../config/base-config";
+import "./RecipeDetails.css";
 
 const RecipeDetails = () => {
   const { id } = useParams();
   const [recipe, setRecipe] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
-  const [imageLoaded, setImageLoaded] = useState(false);
 
   useEffect(() => {
     const fetchRecipe = async () => {
@@ -18,9 +19,7 @@ const RecipeDetails = () => {
 
         if (!response.ok) throw new Error("Failed to fetch recipe");
 
-        const data = await response.json();
-        setRecipe(data);
-        setImageLoaded(false);
+        setRecipe(await response.json());
       } catch (err) {
         console.error("Error fetching recipe details:", err);
         setErrorMessage(err.message);
@@ -33,68 +32,38 @@ const RecipeDetails = () => {
   if (errorMessage) return <div className="error-message">{errorMessage}</div>;
   if (!recipe) return <Spinner />;
 
-  const handleImageDownload = () => {
-    saveAs(recipe.image, `${recipe.name}.jpg`);
-  };
-
-
   return (
     <div className="recipe-details">
       <div className="recipe-box">
         <div className="recipe-grid">
           <div className="recipe-image">
-            {!imageLoaded && <Spinner />}
-            <img
-              src={recipe.image}
-              alt={recipe.name}
-              loading="lazy"
-              onLoad={() => setImageLoaded(true)}
-              onError={() => setImageLoaded(true)}
-              style={{ visibility: imageLoaded ? "visible" : "hidden" }}
-            />
-            <button
-              className="download-btn"
-              onClick={handleImageDownload}
-              type="button"
-              aria-label="Download Recipe Image"
-            >
-              <i className="fa fa-download"/> 
-            </button>
+            <ImageWithLoader src={recipe.image} alt={recipe.name} />
+            <DownloadButton fileUrl={recipe.image} fileName={`${recipe.name}.jpg`} />
           </div>
 
           <div className="recipe-details-info">
             <h2>{recipe.name}</h2>
-
-            <div className="recipe-info">
-              <h3>Details</h3>
-              <ul className="hoverable-list">
-                <li><strong>Cuisine:</strong> {recipe.cuisine}</li>
-                <li><strong>Prep Time:</strong> {recipe.prepTimeMinutes} minutes</li>
-                <li><strong>Cook Time:</strong> {recipe.cookTimeMinutes} minutes</li>
-                <li><strong>Servings:</strong> {recipe.servings}</li>
-                <li><strong>Difficulty:</strong> {recipe.difficulty}</li>
-                <li><strong>Calories per Serving:</strong> {recipe.caloriesPerServing}</li>
-                <li><strong>Rating:</strong> {recipe.rating} ⭐ ({recipe.reviewCount} reviews)</li>
-              </ul>
-            </div>
+            <RecipeInfoList
+            title="Details"
+              data={[
+                { label: "Cuisine", value: recipe.cuisine },
+                { label: "Prep Time", value: `${recipe.prepTimeMinutes} minutes` },
+                { label: "Cook Time", value: `${recipe.cookTimeMinutes} minutes` },
+                { label: "Servings", value: recipe.servings },
+                { label: "Difficulty", value: recipe.difficulty },
+                { label: "Calories per Serving", value: recipe.caloriesPerServing },
+                { label: "Rating", value: `${recipe.rating} ⭐ (${recipe.reviewCount} reviews)` }
+              ]}
+              isLabeled
+            />
           </div>
 
           <div className="recipe-ingredients">
-            <h3>Ingredients</h3>
-            <ul className="hoverable-list">
-              {recipe.ingredients?.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
+          <RecipeInfoList title="Ingredients" data={recipe.ingredients || []}  isLabeled={false}/>
           </div>
 
           <div className="recipe-steps">
-            <h3>Steps</h3>
-            <ul className="hoverable-list">
-              {recipe.instructions?.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
+          <RecipeInfoList title="Steps" data={recipe.instructions || []}  isLabeled={false}/>
           </div>
         </div>
       </div>

@@ -15,9 +15,14 @@ describe("Header Component", () => {
     expect(headerElement).toHaveClass("header-text");
   });
 
-  test("renders an empty component when title is not provided", () => {
+  test("renders an empty header when title is an empty string", () => {
     render(<Header title="" />);
-    const headerElement = screen.getByText("");
+    
+    // Find the heading element
+    const headerElement = screen.getByRole("heading", { level: 1 });
+
+    // Ensure it is empty
     expect(headerElement).toBeInTheDocument();
+    expect(headerElement).toBeEmptyDOMElement();
   });
 });

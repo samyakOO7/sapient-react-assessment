@@ -2,7 +2,7 @@ import React from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import RecipeDetails from "../RecipeDetails";
-import { API_CONFIG } from "../../../base-config";
+import { API_CONFIG } from "../../../config/base-config";
 
 
 jest.mock("../../../atoms/Spinner/Spinner", () => () => <div data-testid="spinner" />);
