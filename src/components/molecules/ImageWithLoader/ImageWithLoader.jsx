@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import Spinner from "../../atoms/Spinner/Spinner";
+import "./ImageWithLoader.css";
 
 
 const ImageWithLoader = ({ src, alt }) => {

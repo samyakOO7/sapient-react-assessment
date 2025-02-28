@@ -12,7 +12,7 @@ const SearchBar = () => {
   const fetchRecipes = async (searchText) => {
     try {
       const url = new URL(API_CONFIG.BASE_URL);
-      url.searchParams.append("search", searchText);
+      url.searchParams.append(API_CONFIG.SEARCH_PATH, searchText);
       const response = await fetch(url);
       const data = await response.json();
       setResults(data);

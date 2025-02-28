@@ -4,7 +4,7 @@ import "./RecipeInfoList.css";
 
 const RecipeInfoList = ({ data = [], heading, isLabeled }) => (
   <section className="recipe-section">
-    <h3>{heading}</h3>
+    <h3 className="recipe-details-heading">{heading}</h3>
     <ul className="hoverable-list">
       {isLabeled
         ? data.map(({ label, value }) => (

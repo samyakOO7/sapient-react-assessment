@@ -11,8 +11,7 @@ const RecipeCard = ({ recipe, onClick }) => {
 
   return (
     <article className="recipe-card">
-      <button
-      type="button"
+      <button type="button"
         className="recipe-card-button"
         onClick={() => onClick?.()}
         onKeyDown={handleKeyPress}

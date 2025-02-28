@@ -20,6 +20,7 @@
       "image details"
       "ingredients steps";
   }
+
   
   .recipe-details-info {
     grid-area: details;

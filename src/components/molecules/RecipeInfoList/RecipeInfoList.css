@@ -1,11 +1,10 @@
-
-h3 {
+.recipe-section .recipe-details-heading {
     font-size: 1.5rem;
     color: #333;
     margin-top: 1.5rem;
     border-bottom: 2px solid #D72638;
     padding-bottom: 0.3rem;
-  }
+}
   
   .hoverable-list {
     list-style: none;
