@@ -21,19 +21,6 @@
       "ingredients steps";
   }
   
-  .recipe-image {
-    grid-area: image;
-    max-width: 100%;
-  }
-  
-  .recipe-image img {
-    width: 100%;
-    height: auto;
-    border-radius: 12px;
-    object-fit: cover;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  }
-  
   .recipe-details-info {
     grid-area: details;
     padding: 1.5rem;
@@ -77,37 +64,6 @@
     grid-area: steps;
   }
   
-  h3 {
-    font-size: 1.5rem;
-    color: #333;
-    margin-top: 1.5rem;
-    border-bottom: 2px solid #D72638;
-    padding-bottom: 0.3rem;
-  }
-  
-  .hoverable-list {
-    list-style: none;
-    padding: 0;
-    margin: 1rem 0;
-    border-radius: 8px;
-    padding: 1rem;
-  }
-  
-  .hoverable-list li {
-    background: #F8F9FA;
-    padding: 10px;
-    margin-bottom: 5px;
-    border-radius: 8px;
-    font-size: 1rem;
-    color: #333;
-    transition: transform 0.3s, background-color 0.3s ease;
-  }
-  
-  .hoverable-list li:hover {
-    transform: scale(1.05); /* Slight zoom effect */
-    background-color: #D72638; /* Change color on hover */
-    color: white; /* Change text color on hover */
-  }
   
   @media (max-width: 768px) {
     .recipe-grid {
@@ -120,34 +76,4 @@
     }
   }
   
-.recipe-image {
-    position: relative;
-    display: inline-block;
-  }
-  
-  .download-btn {
-    position: absolute;
-    right: 10px; 
-    bottom: 10px;
-    background: rgba(255, 255, 255, 0.5);
-    border: none;
-    padding: 10px;
-    border-radius: 20%;
-    cursor: pointer;
-    font-size: 18px;
-    transition: all 0.3s ease;
-  }
-  
-  .download-btn:hover {
-    background: rgba(255, 255, 255, 0.8); 
-    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.3); 
-  }
-  
-  .download-btn i {
-    font-size: 18px
-  }
-  
-  .download-btn:focus {
-    outline: none;
-  }
   
