@@ -51,7 +51,7 @@ const SearchBar = () => {
         <ul className="dropdown">
           {results.map((recipe) => (
             <li key={recipe.id}>
-              <RecipeCard recipe={recipe} onClick={() => handleSelectRecipe(recipe.id)} />
+              <RecipeCard recipe={recipe} onClick={() => handleSelectRecipe(recipe.identity)} />
             </li>
           ))}
         </ul>
