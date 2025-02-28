@@ -22,3 +22,24 @@
     font-size: 14px;
     color: #555;
 }
+
+.recipe-card-button {
+    all: unset;
+    display: block;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+  }
+  
+  .recipe-card-button:focus,
+  .recipe-card-button:active {
+    outline: 2px solid #007bff; 
+    border-radius: 4px;
+    text-decoration: none;
+  }
+  
+  .recipe-title {
+    text-decoration: none;
+  }
+  
+  

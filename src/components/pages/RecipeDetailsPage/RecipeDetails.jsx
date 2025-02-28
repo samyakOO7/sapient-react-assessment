@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import Spinner from "../../atoms/Spinner/Spinner";
 import ImageWithLoader from "../../molecules/ImageWithLoader/ImageWithLoader";
-import DownloadButton from "../../atoms/DownloadImageButton/DownloadImageButton";
 import RecipeInfoList from "../../molecules/RecipeInfoList/RecipeInfoList";
 import API_CONFIG from "../../config/base-config";
 import "./RecipeDetails.css";
+import ImageDownloader from "../../molecules/ImageDownloader/ImageDownloader";
 
 const RecipeDetails = () => {
   const { id } = useParams();
@@ -33,18 +33,18 @@ const RecipeDetails = () => {
   if (!recipe) return <Spinner />;
 
   return (
-    <div className="recipe-details">
-      <div className="recipe-box">
+    <section className="recipe-details">
+      <article className="recipe-box">
         <div className="recipe-grid">
-          <div className="recipe-image">
+          <figure className="recipe-image">
             <ImageWithLoader src={recipe.image} alt={recipe.name} />
-            <DownloadButton fileUrl={recipe.image} fileName={`${recipe.name}.jpg`} />
-          </div>
+            <ImageDownloader fileUrl={recipe.image} fileName={`${recipe.name}.jpg`} />
+          </figure>
 
-          <div className="recipe-details-info">
+          <header className="recipe-details-info">
             <h2>{recipe.name}</h2>
             <RecipeInfoList
-            title="Details"
+              heading="Details"
               data={[
                 { label: "Cuisine", value: recipe.cuisine },
                 { label: "Prep Time", value: `${recipe.prepTimeMinutes} minutes` },
@@ -56,18 +56,18 @@ const RecipeDetails = () => {
               ]}
               isLabeled
             />
-          </div>
+          </header>
 
-          <div className="recipe-ingredients">
-          <RecipeInfoList title="Ingredients" data={recipe.ingredients || []}  isLabeled={false}/>
-          </div>
+          <section className="recipe-ingredients">
+            <RecipeInfoList heading="Ingredients" data={recipe.ingredients || []} isLabeled={false} />
+          </section>
 
-          <div className="recipe-steps">
-          <RecipeInfoList title="Steps" data={recipe.instructions || []}  isLabeled={false}/>
-          </div>
+          <section className="recipe-steps">
+            <RecipeInfoList heading="Steps" data={recipe.instructions || []} isLabeled={false} />
+          </section>
         </div>
-      </div>
-    </div>
+      </article>
+    </section>
   );
 };
 

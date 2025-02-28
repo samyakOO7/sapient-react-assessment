@@ -24,7 +24,7 @@ const SearchBar = () => {
   useEffect(() => {
     const delaySearch = setTimeout(() => {
       if (query.length >= 3) fetchRecipes(query);
-    }, 300); 
+    }, 300);
 
     return () => clearTimeout(delaySearch);
   }, [query]);
@@ -36,22 +36,27 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="search-container">
+    <section className="search-container">
+      <label htmlFor="recipe-search" className="recipe-search-label">SEARCH RECIPES</label>
       <input
+        id="recipe-search"
         className="search-input"
         type="text"
         placeholder="Search recipes..."
         value={query}
         onChange={(e) => setQuery(e.target.value)}
       />
+    
       {results.length > 0 && (
         <ul className="dropdown">
           {results.map((recipe) => (
-            <RecipeCard key={recipe.id} recipe={recipe} onClick={() => handleSelectRecipe(recipe.id)} />
+            <li key={recipe.id}>
+              <RecipeCard recipe={recipe} onClick={() => handleSelectRecipe(recipe.id)} />
+            </li>
           ))}
         </ul>
       )}
-    </div>
+    </section>
   );
 };
 

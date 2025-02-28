@@ -28,6 +28,13 @@
         }
     },
     "rules": {
+        "jsx-a11y/label-has-associated-control": [
+            "error",
+            {
+              "assert": "either",
+              "depth": 3
+            }
+          ],
         "linebreak-style": ["warn", "unix"],
         "semi": ["error", "always"],
         "react/function-component-definition": [2, { "namedComponents": "arrow-function" }],

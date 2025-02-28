@@ -5,16 +5,21 @@ import Spinner from "../../atoms/Spinner/Spinner";
 const SearchBar = React.lazy(() => import("../../atoms/SearchBox/SearchBar"));
 
 const Home = () => (
-  <div className="home-content">
-    <p className="welcome-text">Discover and explore delicious recipes effortlessly!</p>
+  <main className="home-content">
+    <section>
+      <p className="welcome-text">Discover and explore delicious recipes effortlessly!</p>
+    </section>
+
     <div className="spacer" />
 
-    <Suspense fallback={<div><Spinner/></div>}>
-      <SearchBar />
-    </Suspense>
+    <section>
+      <Suspense fallback={<div><Spinner/></div>}>
+        <SearchBar />
+      </Suspense>
+    </section>
 
     <div className="spacer-bottom" />
-  </div>
+  </main>
 );
 
 export default Home;

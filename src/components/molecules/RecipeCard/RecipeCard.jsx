@@ -4,23 +4,24 @@ import "./RecipeCard.css";
 
 const RecipeCard = ({ recipe, onClick }) => {
   const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" || e.key === " ") {
       onClick?.();
     }
   };
 
   return (
-    <div
-      className="recipe-card"
-      onClick={() => onClick?.()}
-      onKeyDown={handleKeyPress}
-      role="button"
-      tabIndex={0}
-      aria-label={`View details for ${recipe.name}`}
-    >
-      <h3 className="recipe-title">{recipe.name}</h3>
-      <p className="recipe-cuisine">{recipe.cuisine}</p>
-    </div>
+    <article className="recipe-card">
+      <button
+      type="button"
+        className="recipe-card-button"
+        onClick={() => onClick?.()}
+        onKeyDown={handleKeyPress}
+        aria-label={`View details for ${recipe.name}`}
+      >
+        <h3 className="recipe-title">{recipe.name}</h3>
+        <p className="recipe-cuisine">{recipe.cuisine}</p>
+      </button>
+    </article>
   );
 };
 

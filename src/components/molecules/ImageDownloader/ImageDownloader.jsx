@@ -2,7 +2,7 @@ import React from "react";
 import { saveAs } from "file-saver";
 import PropTypes from "prop-types";
 
-const DownloadImageButton = ({ fileUrl, fileName }) => {
+const ImageDownloader = ({ fileUrl, fileName }) => {
   const handleDownload = () => saveAs(fileUrl, fileName);
 
   return (
@@ -11,9 +11,9 @@ const DownloadImageButton = ({ fileUrl, fileName }) => {
     </button>
   );
 };
-DownloadImageButton.propTypes = {
+ImageDownloader.propTypes = {
   fileUrl: PropTypes.string.isRequired,
   fileName: PropTypes.string.isRequired
 };
 
-export default DownloadImageButton;
+export default ImageDownloader;

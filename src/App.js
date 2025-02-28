@@ -1,5 +1,7 @@
 import React, { lazy, Suspense } from "react";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
+import PropTypes from "prop-types";
+
 import Error from "./components/pages/ErrorPage/Error";
 import Spinner from "./components/atoms/Spinner/Spinner";
 import Home from "./components/pages/HomePage/Home";
@@ -25,5 +27,13 @@ const App = ({ router: RouterComponent = BrowserRouter }) => (
     </Routes>
   </RouterComponent>
 );
+
+App.propTypes = {
+  router: PropTypes.elementType
+};
+
+App.defaultProps = {
+  router: BrowserRouter
+};
 
 export default App;

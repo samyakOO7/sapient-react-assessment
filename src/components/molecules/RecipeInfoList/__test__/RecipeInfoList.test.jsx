@@ -4,7 +4,7 @@ import RecipeInfoList from "../RecipeInfoList";
 
 describe("RecipeInfoList Component", () => {
   test("renders title correctly", () => {
-    render(<RecipeInfoList title="Ingredients" data={[]} />);
+    render(<RecipeInfoList heading="Ingredients" data={[]} />);
     expect(screen.getByRole("heading", { level: 3 })).toHaveTextContent("Ingredients");
   });
 
@@ -14,7 +14,7 @@ describe("RecipeInfoList Component", () => {
       { label: "Prep Time", value: "30 minutes" }
     ];
 
-    render(<RecipeInfoList title="Details" data={data} isLabeled />);
+    render(<RecipeInfoList heading="Details" data={data} isLabeled />);
 
     expect(screen.getByText("Cuisine:")).toBeInTheDocument();
     expect(screen.getByText("Italian")).toBeInTheDocument();
@@ -25,7 +25,7 @@ describe("RecipeInfoList Component", () => {
   test("renders unlabeled items when isLabeled is false", () => {
     const data = ["Tomato", "Cheese", "Basil"];
 
-    render(<RecipeInfoList title="Ingredients" data={data} isLabeled={false} />);
+    render(<RecipeInfoList heading="Ingredients" data={data} isLabeled={false} />);
 
     data.forEach((item) => {
       expect(screen.getByText(item)).toBeInTheDocument();
@@ -33,7 +33,7 @@ describe("RecipeInfoList Component", () => {
   });
 
   test("renders empty list without errors", () => {
-    render(<RecipeInfoList title="Empty List" data={[]} />);
+    render(<RecipeInfoList heading="Empty List" data={[]} />);
     expect(screen.getByRole("list")).toBeEmptyDOMElement();
   });
 });

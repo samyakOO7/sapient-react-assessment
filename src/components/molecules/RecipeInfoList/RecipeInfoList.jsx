@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const RecipeInfoList = ({ data = [], title, isLabeled }) => (
-  <div className="recipe-section">
-    <h3>{title}</h3>
+const RecipeInfoList = ({ data = [], heading, isLabeled }) => (
+  <section className="recipe-section">
+    <h3>{heading}</h3>
     <ul className="hoverable-list">
       {isLabeled
         ? data.map(({ label, value }) => (
@@ -13,15 +13,15 @@ const RecipeInfoList = ({ data = [], title, isLabeled }) => (
           ))
         : data.map((item) => <li key={item}>{item}</li>)}
     </ul>
-  </div>
+  </section>
 );
 
 RecipeInfoList.defaultProps = {
-    isLabeled: false
-  };
+  isLabeled: false
+};
 
 RecipeInfoList.propTypes = {
-  title: PropTypes.string.isRequired,
+  heading: PropTypes.string.isRequired,
   isLabeled: PropTypes.bool,
   data: PropTypes.arrayOf(
     PropTypes.oneOfType([
@@ -29,7 +29,7 @@ RecipeInfoList.propTypes = {
         label: PropTypes.string.isRequired,
         value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired
       }),
-      PropTypes.string, 
+      PropTypes.string,
       PropTypes.number
     ])
   ).isRequired

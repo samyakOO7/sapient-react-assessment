@@ -6,13 +6,19 @@ const Error = () => {
     const navigate = useNavigate();
 
     return (
-        <div className="error-container">
-            <h1 className="error-title">404</h1>
-            <p className="error-text">Page not found</p>
-            <button type="button" className="error-button" onClick={() => navigate("/")}>
-                Go Home
-            </button>
-        </div>
+        <main className="error-container">
+            <header>
+                <h1 className="error-title">404</h1>
+            </header>
+            <section>
+                <p className="error-text">Page not found</p>
+            </section>
+            <nav>
+                <button type="button" className="error-button" onClick={() => navigate("/")}>
+                    Go Home
+                </button>
+            </nav>
+        </main>
     );
 };
 
