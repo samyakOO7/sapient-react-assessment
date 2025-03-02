@@ -37,7 +37,7 @@ const SearchBar = () => {
 
   return (
     <section className="search-container">
-      <label htmlFor="recipe-search" className="recipe-search-label">SEARCH RECIPES</label>
+      <label htmlFor="recipe-search" className="recipe-search-label">{API_CONFIG.SEARCH_RECIPES}</label>
       <input
         id="recipe-search"
         className="search-input"

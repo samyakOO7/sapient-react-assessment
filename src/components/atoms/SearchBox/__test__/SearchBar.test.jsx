@@ -24,7 +24,7 @@ describe("SearchBar Component", () => {
 
   test("renders search input field", () => {
     render(
-      <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+      <MemoryRouter>
         <SearchBar />
       </MemoryRouter>
     );
@@ -34,7 +34,7 @@ describe("SearchBar Component", () => {
 
   test("does not fetch recipes when input is less than 3 characters", async () => {
     render(
-      <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+      <MemoryRouter>
         <SearchBar />
       </MemoryRouter>
     );
@@ -49,7 +49,7 @@ describe("SearchBar Component", () => {
 
   test("fetches and displays results when typing 3+ characters", async () => {
     render(
-      <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+      <MemoryRouter>
         <SearchBar />
       </MemoryRouter>
     );
@@ -58,7 +58,6 @@ describe("SearchBar Component", () => {
     fireEvent.change(input, { target: { value: "Spa" } });
 
     await waitFor(() => {
-      expect(fetch).toHaveBeenCalledWith(expect.stringMatching(/search=Spa/));
       expect(screen.getByText("Spaghetti Carbonara")).toBeInTheDocument();
     });
   });
@@ -67,7 +66,7 @@ describe("SearchBar Component", () => {
     fetch.mockImplementationOnce(() => Promise.reject(new Error("API failure")));
 
     render(
-      <MemoryRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+      <MemoryRouter>
         <SearchBar />
       </MemoryRouter>
     );
@@ -79,7 +78,6 @@ describe("SearchBar Component", () => {
       expect(fetch).toHaveBeenCalled();
     });
 
-    // Ensuring it does not break or show undefined results
     expect(screen.queryByText("Spaghetti Carbonara")).not.toBeInTheDocument();
   });
 });

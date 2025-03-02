@@ -16,6 +16,7 @@
   
   .hoverable-list li {
     background: #F8F9FA;
+    text-align: left;
     padding: 10px;
     margin-bottom: 5px;
     border-radius: 8px;

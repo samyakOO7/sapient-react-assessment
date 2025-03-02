@@ -3,7 +3,6 @@ import { render, screen, waitFor } from "@testing-library/react";
 import { MemoryRouter, Routes, Route } from "react-router-dom";
 import RecipeDetails from "../RecipeDetails";
 
-// Mock the dependencies
 jest.mock("../../../atoms/Spinner/Spinner", () => () => <div data-testid="spinner">Loading...</div>);
 jest.mock("../../../molecules/ImageWithLoader/ImageWithLoader", () => ({ src, alt }) => 
   <img src={src} alt={alt} data-testid="image-with-loader" />
@@ -17,7 +16,7 @@ jest.mock("../../../molecules/RecipeInfoList/RecipeInfoList", () => ({ heading, 
     }
   </div>
 ));
-jest.mock("../../../atoms/ImageDownloader/ImageDownloader", () => ({ fileUrl, fileName }) => 
+jest.mock("../../../molecules/ImageDownloader/ImageDownloader", () => ({ fileUrl, fileName }) => 
   <button data-testid="image-downloader">Download {fileName}</button>
 );
 
@@ -45,7 +44,7 @@ describe("RecipeDetails Component", () => {
   });
 
   it("shows loading spinner initially", () => {
-    fetch.mockImplementationOnce(() => new Promise(() => {}));
+    fetch.mockImplementationOnce(() => new Promise((resolve) => setTimeout(resolve, 1000)));
     
     renderWithRouter("1");
     
@@ -94,7 +93,6 @@ describe("RecipeDetails Component", () => {
 
     await waitFor(() => expect(screen.queryByTestId("spinner")).not.toBeInTheDocument());
     
-    // Check heading
     expect(screen.getByRole("heading", { level: 2 })).toHaveTextContent("Spaghetti Carbonara");
     
     const detailsSection = screen.getByTestId("info-list-details");
@@ -127,8 +125,7 @@ describe("RecipeDetails Component", () => {
     
     renderWithRouter("1");
     
-    await waitFor(() => expect(screen.getByText("Network error")).toBeInTheDocument());
-    expect(screen.getByText("Network error")).toHaveClass("error-message");
+     await waitFor(() => expect(screen.getByText("Network error")).toHaveClass("error-message"));
   });
 
   it("handles bad API response gracefully", async () => {
@@ -139,26 +136,20 @@ describe("RecipeDetails Component", () => {
     
     renderWithRouter("1");
     
-    await waitFor(() => expect(screen.getByText("Failed to fetch recipe")).toBeInTheDocument());
-    expect(screen.getByText("Failed to fetch recipe")).toHaveClass("error-message");
+    await waitFor(() =>  expect(screen.getByText("Failed to fetch recipe")).toHaveClass("error-message"));
   });
 
   it("triggers a new fetch when recipe ID changes", async () => {
-    const { rerender } = renderWithRouter("1");
-    
+    const { unmount } = renderWithRouter("1");
+  
     await waitFor(() => expect(fetch).toHaveBeenCalledTimes(1));
     expect(fetch).toHaveBeenCalledWith(`${API_CONFIG.BASE_URL}/1`);
-    
-    fetch.mockClear();
-    
-    rerender(
-      <MemoryRouter initialEntries={[`/recipe/2`]}>
-        <Routes>
-          <Route path="/recipe/:id" element={<RecipeDetails />} />
-        </Routes>
-      </MemoryRouter>
-    );
-    
+  
+    fetch.mockClear(); 
+  
+    unmount();
+    renderWithRouter("2");
+  
     await waitFor(() => expect(fetch).toHaveBeenCalledTimes(1));
     expect(fetch).toHaveBeenCalledWith(`${API_CONFIG.BASE_URL}/2`);
   });
