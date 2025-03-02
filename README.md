@@ -1,70 +1,127 @@
-# Getting Started with Create React App
+# Recipes App UI  
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview  
+The **Recipes App** is a frontend application built using React that allows users to browse, search, and view recipes. It interacts with the **Recipes API** to fetch and display recipe data dynamically.  
 
-## Available Scripts
+## Features  
+- Load and display recipes from an external API.  
+- Search for recipes based on name and cuisine.  
+- View detailed recipe information, including ingredients, instructions, and ratings.  
+- Responsive UI for a seamless user experience.  
 
-In the project directory, you can run:
+## Tech Stack  
+- **React** (Frontend framework)  
+- **React Router** (Client-side navigation)  
+- **Fetch API** (API calls)  
+- **Styled Components / CSS Modules** (Styling)  
+- **Jest & React Testing Library** (Testing)  
 
-### `npm start`
+## Installation & Setup  
+2. **Install dependencies:**  
+   ```bash
+   npm install
+   ```  
+3. **Start the development server:**  
+   ```bash
+   npm start
+   ```  
+4. Open the app in the browser:  
+   ```
+   http://localhost:3000
+   ```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## API Integration  
+The frontend communicates with the **Recipes API** running at:  
+```
+http://localhost:8080/api/recipes
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Fetch Recipes By Search Query  
+**Endpoint:**  
+```
+GET /api/recipes?search={name/cuisine}
+```
+**Implementation:**  
+```javascript
+const fetchRecipes = async (searchText) => {
+    try {
+      const url = new URL("http://localhost:8080/api/recipes");
+      url.searchParams.append("search", searchText);
+      const response = await fetch(url);
+      const data = await response.json();
+      setResults(data);
+    } catch (error) {
+      console.error("Error fetching recipes:", error);
+    }
+  };
+```
 
-### `npm test`
+### Fetch Recipes By Id
+**Endpoint:**  
+```
+GET /api/recipes/{id}
+```
+**Implementation:**  
+```javascript
+    const fetchRecipe = async () => {
+      try {
+        const response = await fetch(`http://localhost:8080/api/recipes/${id}`);
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+        if (!response.ok) throw new Error("Failed to fetch recipe");
 
-### `npm run build`
+        setRecipe(await response.json());
+      } catch (err) {
+        console.error("Error fetching recipe details:", err);
+        setErrorMessage(err.message);
+      }
+    };
+```
+The value of URL comes from Configuration.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Project Structure  
+```
+recipes-orchestrator-ui/
+│── src/
+│   ├── components/       # Reusable UI components
+|   |   |-- pages/        # Page components (Home, Recipe Details)
+│   |   ├── molecules/    # A combination of atoms that work together.        
+│   |   ├── atoms/        # Basic Building Blocks of UI     
+|   |   |-- config/       # Configuration classes for UI  
+│   ├── App.js            # Main App Component
+│   ├── index.js          # Entry point
+│── public/               # Static assets
+│── package.json          # Dependencies and scripts
+│── README.md             # Documentation
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Testing  
+Run tests using:  
+```bash
+npm test
+```  
 
-### `npm run eject`
+Example test for the `Spinner` component:  
+```javascript
+import { render, screen } from "@testing-library/react";
+import Spinner from "./components/Spinner";
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+test("renders the spinner component", () => {
+  render(<Spinner />);
+  expect(screen.getByTestId("spinner-box")).toBeInTheDocument();
+});
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Lighthouse Report  
+To analyze performance, install the **Lighthouse** Chrome extension or run:  
+```bash
+npx lighthouse http://localhost:3000 --view
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Deployment  
+Build the project:  
+  ```bash
+  npm run build
+  ```
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
